@@ -21,7 +21,9 @@ function checkCommand(
           `Changes not staged for commit:\n` +
           `(use "git add <file>..." to update what will be committed)\n` +
           `(use "git restore <file>..." to discard changes in working directory)\n` +
-          '    modified:   app/components/console/console.tsx'
+          context.workingDirectory
+            .map((file) => `    modified:   ${file}`)
+            .join('\n')
         )
       default:
         return `git: '${splittedCommand[1]}' is not a git command. See 'git --help'`
