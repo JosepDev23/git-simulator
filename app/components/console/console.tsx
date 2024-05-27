@@ -1,13 +1,15 @@
 'use client'
-import React, { KeyboardEvent, useRef, useState } from 'react'
+import React, { KeyboardEvent, useContext, useRef, useState } from 'react'
 import styles from './console.module.css'
 import ConsoleService from '@/app/services/console.service'
+import { GitSimulationContext } from '@/app/hooks/GitSimulationContext'
 
 export default function Console() {
   const [consoleValue, setConsoleValue] = useState<string>('')
   const [consoleLines, setConsoleLines] = useState<
     { command: string; output?: string }[]
   >([])
+  const gitSimuilationContext = useContext(GitSimulationContext)
   const inputRef = useRef<HTMLInputElement>(null)
 
   function handleConsoleValueChange(change: string) {
@@ -16,7 +18,10 @@ export default function Console() {
 
   function handleKeyDown(event: KeyboardEvent<HTMLInputElement>) {
     if (event.key === 'Enter') {
-      const output = ConsoleService.checkCommand(consoleValue)
+      const output = ConsoleService.checkCommand(
+        consoleValue,
+        gitSimuilationContext!
+      )
       setConsoleLines((prev) => prev.concat({ command: consoleValue, output }))
       setConsoleValue('')
     }

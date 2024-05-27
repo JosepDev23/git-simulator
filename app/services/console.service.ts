@@ -1,4 +1,9 @@
-function checkCommand(command: string): string | undefined {
+import { GitSimulationContextType } from '../hooks/GitSimulationContext'
+
+function checkCommand(
+  command: string,
+  context: GitSimulationContextType
+): string | undefined {
   const splittedCommand: string[] = command.split(' ')
   if (splittedCommand[0] === '') return undefined
 
@@ -6,6 +11,10 @@ function checkCommand(command: string): string | undefined {
     return `Command ${splittedCommand[0]} isn't recognized yet`
   else {
     switch (splittedCommand[1]) {
+      case 'editfile':
+        if (!splittedCommand[2]) return 'Usage: git editfile <filename>'
+        context.makeChanges(splittedCommand[2])
+        return `File ${splittedCommand[2]} edited successfully!`
       case 'status':
         return (
           `On branch master\n` +
