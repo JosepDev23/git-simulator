@@ -35,7 +35,7 @@ export default function Console() {
               $ {consoleLine.command}
             </label>
             {consoleLine.output && (
-              <label key={consoleLine.output + i}>{consoleLine.output}</label>
+              <pre key={consoleLine.output + i}>{consoleLine.output}</pre>
             )}
           </>
         ))}

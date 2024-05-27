@@ -20,7 +20,8 @@ body {
   background-color: var(--color-gray);
 }
 
-label {
+label,
+pre {
   color: var(--color-white);
   word-wrap: break-word;
 }
