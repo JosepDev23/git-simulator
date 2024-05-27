@@ -1,0 +1,20 @@
+.background {
+  width: calc(100vw - 37rem);
+  margin: 1rem;
+  display: flex;
+}
+
+.stage {
+  width: 25%;
+  margin: 0 0.5rem;
+  border: solid var(--color-white);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stage h2 {
+  margin-top: 0.5rem;
+  color: var(--color-white);
+  text-decoration: underline;
+}

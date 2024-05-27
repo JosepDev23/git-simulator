@@ -9,7 +9,7 @@ export default function Console() {
   const [consoleLines, setConsoleLines] = useState<
     { command: string; output?: string }[]
   >([])
-  const gitSimuilationContext = useContext(GitSimulationContext)
+  const gitSimulationContext = useContext(GitSimulationContext)
   const inputRef = useRef<HTMLInputElement>(null)
 
   function handleConsoleValueChange(change: string) {
@@ -20,7 +20,7 @@ export default function Console() {
     if (event.key === 'Enter') {
       const output = ConsoleService.checkCommand(
         consoleValue,
-        gitSimuilationContext!
+        gitSimulationContext!
       )
       setConsoleLines((prev) => prev.concat({ command: consoleValue, output }))
       setConsoleValue('')
