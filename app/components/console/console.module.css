@@ -1,0 +1,39 @@
+.console_wrapper {
+  width: 37rem;
+  margin: 1rem;
+  background-color: var(--color-black);
+  cursor: text;
+}
+
+.console_lines {
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 2rem);
+  max-height: calc(100% - 2rem);
+  padding: 0.5rem;
+}
+
+.input_wrapper {
+  display: flex;
+  align-items: center;
+  padding-left: 0.5rem;
+}
+
+.console_input {
+  font-size: 1rem;
+  height: 2rem;
+  width: 100%;
+  resize: none;
+  border: none;
+  background-color: var(--color-black);
+  color: var(--color-white);
+  padding: 0 0.5rem;
+}
+
+.console_input:focus {
+  outline: none;
+}
+
+.line {
+  margin-bottom: 0.2rem;
+}

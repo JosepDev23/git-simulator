@@ -1,0 +1,10 @@
+.main {
+  display: flex;
+  min-height: 100vh;
+}
+
+.drawing {
+  width: calc(100vw - 37rem);
+  margin: 1rem;
+  border: solid var(--color-white);
+}
