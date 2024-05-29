@@ -64,6 +64,13 @@ function checkCommand(
           }
         }
 
+      case 'commit':
+        if (splittedCommand[2] !== '-m')
+          return 'Usage: git commit -m <commit-name>'
+        else if (!splittedCommand[3])
+          return 'Usage: git commit -m <commit-name>'
+        else {
+        }
       default:
         return `git: '${splittedCommand[1]}' is not a git command. See 'git --help'`
     }

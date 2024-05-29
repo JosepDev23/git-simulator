@@ -54,6 +54,15 @@ export const GitSimulationProvider = ({
     setWorkingDirectory([])
   }
 
+  function commitChanges(commitName: string) {
+    if (stagingArea.length === 0)
+      throw new Error('On branch master\nnothing to commit, working tree clean')
+    setRepository((prev) =>
+      prev.concat({ name: commitName, changes: stagingArea })
+    )
+    setStagingArea([])
+  }
+
   return (
     <GitSimulationContext.Provider
       value={{
