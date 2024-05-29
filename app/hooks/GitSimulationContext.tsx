@@ -10,6 +10,7 @@ export interface GitSimulationContextType {
   makeChanges: (file: string) => void
   moveFromWorkingDirectoryToStagingArea: (file: string) => void
   moveAllFromWorkingDirectoryToStagingArea: () => void
+  commitChanges: (commitName: string, commitId: string) => void
 }
 
 export const GitSimulationContext = createContext<
@@ -54,11 +55,15 @@ export const GitSimulationProvider = ({
     setWorkingDirectory([])
   }
 
-  function commitChanges(commitName: string) {
+  function commitChanges(commitName: string, commitId: string) {
     if (stagingArea.length === 0)
       throw new Error('On branch master\nnothing to commit, working tree clean')
     setRepository((prev) =>
-      prev.concat({ name: commitName, changes: stagingArea })
+      prev.concat({
+        id: commitId,
+        name: commitName,
+        changes: stagingArea,
+      })
     )
     setStagingArea([])
   }
@@ -73,6 +78,7 @@ export const GitSimulationProvider = ({
         makeChanges,
         moveFromWorkingDirectoryToStagingArea,
         moveAllFromWorkingDirectoryToStagingArea,
+        commitChanges,
       }}
     >
       {children}

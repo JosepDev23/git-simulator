@@ -1,4 +1,5 @@
 import { GitSimulationContextType } from '../hooks/GitSimulationContext'
+import generateCommitId from './generate-commit-id.service'
 
 function checkCommand(
   command: string,
@@ -70,6 +71,16 @@ function checkCommand(
         else if (!splittedCommand[3])
           return 'Usage: git commit -m <commit-name>'
         else {
+          const commitName: string = splittedCommand
+            .slice(3)
+            .join(' ')
+            .split('"')[1]
+          const commitId: string = generateCommitId()
+          context.commitChanges(commitName, commitId)
+          return (
+            `[master ${commitId}]\n` +
+            `${context.stagingArea.length} files changed, x insertions(+)`
+          )
         }
       default:
         return `git: '${splittedCommand[1]}' is not a git command. See 'git --help'`
