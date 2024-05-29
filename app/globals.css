@@ -18,6 +18,10 @@ body {
 
 body {
   background-color: var(--color-gray);
+  font-family: 'Source Code Pro', monospace;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
 }
 
 label,
