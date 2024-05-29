@@ -1,11 +1,12 @@
 'use client'
 import React, { ReactNode, createContext, useState } from 'react'
+import Commit from '../components/models/commit'
 
 export interface GitSimulationContextType {
   workingDirectory: string[]
   stagingArea: string[]
-  repository: string[]
-  remote: string[]
+  repository: Commit[]
+  remote: Commit[]
   makeChanges: (file: string) => void
   moveFromWorkingDirectoryToStagingArea: (file: string) => void
   moveAllFromWorkingDirectoryToStagingArea: () => void
@@ -22,8 +23,8 @@ export const GitSimulationProvider = ({
 }) => {
   const [workingDirectory, setWorkingDirectory] = useState<string[]>([])
   const [stagingArea, setStagingArea] = useState<string[]>([])
-  const [repository, setRepository] = useState<string[]>([])
-  const [remote, setRemote] = useState<string[]>([])
+  const [repository, setRepository] = useState<Commit[]>([])
+  const [remote, setRemote] = useState<Commit[]>([])
 
   function makeChanges(file: string) {
     const findedFile: string | undefined = workingDirectory.find(

@@ -22,14 +22,14 @@ export default function Drawing() {
       </div>
       <div className={styles.stage}>
         <h2>Repository</h2>
-        {gitSimulationContext?.repository.map((line) => (
-          <p>{line}</p>
+        {gitSimulationContext?.repository.map((commit) => (
+          <p>{commit.name}</p>
         ))}
       </div>
       <div className={styles.stage}>
         <h2>Remote</h2>
-        {gitSimulationContext?.remote.map((line) => (
-          <p>{line}</p>
+        {gitSimulationContext?.remote.map((commit) => (
+          <p>{commit.name}</p>
         ))}
       </div>
     </div>
