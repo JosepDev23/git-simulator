@@ -8,6 +8,7 @@ export interface GitSimulationContextType {
   remote: string[]
   makeChanges: (file: string) => void
   moveFromWorkingDirectoryToStagingArea: (file: string) => void
+  moveAllFromWorkingDirectoryToStagingArea: () => void
 }
 
 export const GitSimulationContext = createContext<
@@ -33,8 +34,7 @@ export const GitSimulationProvider = ({
 
   function moveFromWorkingDirectoryToStagingArea(file: string) {
     const fileIndex: number = workingDirectory.findIndex((f) => f === file)
-    if (!moveFromWorkingDirectoryToStagingArea)
-      throw new Error(`File ${file} does not extist!`)
+    if (!fileIndex) throw new Error(`File ${file} does not extist!`)
     else {
       let f: string
       setWorkingDirectory((prev) => {
@@ -43,6 +43,14 @@ export const GitSimulationProvider = ({
       })
       setStagingArea((prev) => prev.concat(f))
     }
+  }
+
+  function moveAllFromWorkingDirectoryToStagingArea() {
+    setStagingArea((prev) => {
+      const filesToAdd = workingDirectory.filter((file) => !prev.includes(file))
+      return prev.concat(filesToAdd)
+    })
+    setWorkingDirectory([])
   }
 
   return (
@@ -54,6 +62,7 @@ export const GitSimulationProvider = ({
         remote,
         makeChanges,
         moveFromWorkingDirectoryToStagingArea,
+        moveAllFromWorkingDirectoryToStagingArea,
       }}
     >
       {children}

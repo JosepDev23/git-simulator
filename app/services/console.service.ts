@@ -17,30 +17,53 @@ function checkCommand(
           'status                Show the working tree status\n' +
           'add                   Add file contents to the index\n'
         )
+
       case 'editfile':
         if (!splittedCommand[2]) return 'Usage: git editfile <filename>'
         context.makeChanges(splittedCommand[2])
         return `File ${splittedCommand[2]} edited successfully!`
+
       case 'status':
-        if (context.workingDirectory.length > 0)
-          return (
-            `On branch master\n` +
+        let statusResponse = `On branch master\n`
+        if (
+          context.stagingArea.length === 0 &&
+          context.workingDirectory.length === 0
+        ) {
+          statusResponse += 'Nothing to commit, working tree clean'
+          return statusResponse
+        }
+        if (context.stagingArea.length > 0) {
+          statusResponse +=
+            'Changes to be committed:\n' +
+            '  (use "git restore --staged <file>..." to unstage)' +
+            context.stagingArea.map((file) => `    modified: ${file}`)
+        }
+        if (context.workingDirectory.length > 0) {
+          statusResponse +=
             `Changes not staged for commit:\n` +
-            `(use "git add <file>..." to update what will be committed)\n` +
-            `(use "git restore <file>..." to discard changes in working directory)\n` +
+            `  (use "git add <file>..." to update what will be committed)\n` +
+            `  (use "git restore <file>..." to discard changes in working directory)\n` +
             context.workingDirectory
-              .map((file) => `    modified:   ${file}`)
+              .map((file) => `    modified: ${file}`)
               .join('\n')
-          )
-        else return 'Nothing to commit, working tree clean'
+        }
+        return statusResponse
+
       case 'add':
         if (!splittedCommand[2])
           return 'Usage: git add <filename> or git add --all'
         else if (splittedCommand[2] === '--all') {
-          context.workingDirectory.forEach((file) => {
-            context.moveFromWorkingDirectoryToStagingArea(file)
-          })
+          context.moveAllFromWorkingDirectoryToStagingArea()
+          return
+        } else {
+          try {
+            context.moveFromWorkingDirectoryToStagingArea(splittedCommand[2])
+            return
+          } catch (error: any) {
+            return error.cause as string
+          }
         }
+
       default:
         return `git: '${splittedCommand[1]}' is not a git command. See 'git --help'`
     }
