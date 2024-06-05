@@ -16,7 +16,8 @@ function checkCommand(
         return (
           'editfile <filename>   Make changes to <filename>\n' +
           'status                Show the working tree status\n' +
-          'add                   Add file contents to the index\n'
+          'add                   Add file contents to the index\n' +
+          'commit -m "<name>"    Record changes to the repository\n'
         )
 
       case 'editfile':
@@ -36,8 +37,10 @@ function checkCommand(
         if (context.stagingArea.length > 0) {
           statusResponse +=
             'Changes to be committed:\n' +
-            '  (use "git restore --staged <file>..." to unstage)' +
-            context.stagingArea.map((file) => `    modified: ${file}`)
+            '  (use "git restore --staged <file>..." to unstage)\n' +
+            context.stagingArea
+              .map((file) => `    modified: ${file}`)
+              .join('\n')
         }
         if (context.workingDirectory.length > 0) {
           statusResponse +=
@@ -67,9 +70,9 @@ function checkCommand(
 
       case 'commit':
         if (splittedCommand[2] !== '-m')
-          return 'Usage: git commit -m <commit-name>'
+          return 'Usage: git commit -m "<commit-name>"'
         else if (!splittedCommand[3])
-          return 'Usage: git commit -m <commit-name>'
+          return 'Usage: git commit -m "<commit-name>"'
         else {
           const commitName: string = splittedCommand
             .slice(3)
