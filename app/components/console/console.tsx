@@ -56,14 +56,14 @@ export default function Console() {
     <div className={styles.console_wrapper} onClick={handleWrapperClick}>
       <div className={styles.console_lines}>
         {consoleLines.map((consoleLine, i) => (
-          <>
+          <div key={`console-line-${i}`}>
             <label key={consoleLine.command + i} className={styles.line}>
               $ {consoleLine.command}
             </label>
             {consoleLine.output && (
               <pre key={consoleLine.output + i}>{consoleLine.output}</pre>
             )}
-          </>
+          </div>
         ))}
       </div>
       <div className={styles.input_wrapper}>
