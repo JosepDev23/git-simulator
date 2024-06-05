@@ -11,6 +11,7 @@ export interface GitSimulationContextType {
   moveFromWorkingDirectoryToStagingArea: (file: string) => void
   moveAllFromWorkingDirectoryToStagingArea: () => void
   commitChanges: (commitName: string, commitId: string) => void
+  push: () => void
 }
 
 export const GitSimulationContext = createContext<
@@ -68,6 +69,11 @@ export const GitSimulationProvider = ({
     setStagingArea([])
   }
 
+  function push() {
+    setRemote((prev) => prev.concat(repository))
+    setRepository([])
+  }
+
   return (
     <GitSimulationContext.Provider
       value={{
@@ -79,6 +85,7 @@ export const GitSimulationProvider = ({
         moveFromWorkingDirectoryToStagingArea,
         moveAllFromWorkingDirectoryToStagingArea,
         commitChanges,
+        push,
       }}
     >
       {children}

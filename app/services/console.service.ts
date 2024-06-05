@@ -85,6 +85,20 @@ function checkCommand(
             `${context.stagingArea.length} files changed, x insertions(+)`
           )
         }
+      case 'push':
+        const objects = context.repository.length
+        if (objects === 0) return 'Everything up-to-date'
+        context.push()
+        return (
+          `Counting objects: ${objects}, done.\n` +
+          `Delta compression using up to 4 threads.\n` +
+          `Compressing objects: 100% (${objects}/${objects}), done.\n` +
+          `Writing objects: 100% (${objects}/${objects}), 400 bytes | 400.00 KiB/s, done.\n` +
+          `Total ${objects} (delta 0), reused 0 (delta 0)\n` +
+          `To https://github.com/user/repo.git\n` +
+          `  master -> master`
+        )
+
       default:
         return `git: '${splittedCommand[1]}' is not a git command. See 'git --help'`
     }
