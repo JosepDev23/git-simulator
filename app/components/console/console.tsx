@@ -15,6 +15,7 @@ export default function Console() {
 
   function handleConsoleValueChange(change: string) {
     setConsoleValue(change)
+
     setLineCounter(consoleLines.length + 1)
   }
 
