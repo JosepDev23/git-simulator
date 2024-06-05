@@ -1,0 +1,12 @@
+.card_wrapper {
+  border: solid var(--color-black);
+  display: flex;
+  flex-direction: column;
+  color: var(--color-black);
+  padding: 0.3rem;
+}
+
+.card_title {
+  align-self: center;
+  text-decoration: underline;
+}

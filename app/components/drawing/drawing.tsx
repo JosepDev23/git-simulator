@@ -2,6 +2,7 @@
 import React, { useContext } from 'react'
 import styles from './drawing.module.css'
 import { GitSimulationContext } from '@/app/hooks/GitSimulationContext'
+import CommitCard from '../commit-card/commit-card'
 
 export default function Drawing() {
   const gitSimulationContext = useContext(GitSimulationContext)
@@ -23,13 +24,17 @@ export default function Drawing() {
       <div className={styles.stage}>
         <h2>Repository</h2>
         {gitSimulationContext?.repository.map((commit) => (
-          <p>{commit.name}</p>
+          <div className={styles.card_container}>
+            <CommitCard commit={commit} />
+          </div>
         ))}
       </div>
       <div className={styles.stage}>
         <h2>Remote</h2>
         {gitSimulationContext?.remote.map((commit) => (
-          <p>{commit.name}</p>
+          <div className={styles.card_container}>
+            <CommitCard commit={commit} />
+          </div>
         ))}
       </div>
     </div>
