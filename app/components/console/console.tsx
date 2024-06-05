@@ -15,6 +15,7 @@ export default function Console() {
 
   function handleConsoleValueChange(change: string) {
     setConsoleValue(change)
+    setLineCounter(consoleLines.length + 1)
   }
 
   function handleKeyDown(event: KeyboardEvent<HTMLInputElement>) {
@@ -29,20 +30,18 @@ export default function Console() {
       setLineCounter(consoleLines.length + 1)
     } else if (event.key === 'ArrowUp') {
       event.preventDefault()
-      if (lineCounter === 0) {
-        setConsoleValue('')
-        setLineCounter(consoleLines.length)
-      } else {
+      if (lineCounter !== 0) {
         setConsoleValue(consoleLines[lineCounter - 1].command)
         setLineCounter((prev) => prev - 1)
       }
     } else if (event.key === 'ArrowDown') {
       event.preventDefault()
-      if (lineCounter === consoleLines.length - 1) {
-        setConsoleValue('')
-        setLineCounter(0)
-      } else {
-        setConsoleValue(consoleLines[lineCounter + 1].command)
+      if (lineCounter !== consoleLines.length) {
+        setConsoleValue(
+          consoleLines[lineCounter + 1]
+            ? consoleLines[lineCounter + 1].command
+            : ''
+        )
         setLineCounter((prev) => prev + 1)
       }
     }
