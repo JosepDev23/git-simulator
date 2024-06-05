@@ -37,8 +37,10 @@ export const GitSimulationProvider = ({
 
   function moveFromWorkingDirectoryToStagingArea(file: string) {
     const fileIndex: number = workingDirectory.findIndex((f) => f === file)
-    if (!fileIndex) throw new Error(`File ${file} does not extist!`)
-    else {
+    if (fileIndex === -1) {
+      throw new Error(`File ${file} does not extist!`)
+    } else {
+      console.log('jacinto no error')
       let f: string
       setWorkingDirectory((prev) => {
         f = prev.splice(fileIndex, 1)[0]

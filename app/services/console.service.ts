@@ -43,6 +43,7 @@ function checkCommand(
             context.stagingArea
               .map((file) => `    modified: ${file}`)
               .join('\n')
+              .concat('\n')
         }
         if (context.workingDirectory.length) {
           statusResponse +=
@@ -52,6 +53,7 @@ function checkCommand(
             context.workingDirectory
               .map((file) => `    modified: ${file}`)
               .join('\n')
+              .concat('\n')
         }
         return statusResponse
 
@@ -63,10 +65,11 @@ function checkCommand(
           return
         } else {
           try {
-            context.moveFromWorkingDirectoryToStagingArea(splittedCommand[2])
+            if (splittedCommand[2])
+              context.moveFromWorkingDirectoryToStagingArea(splittedCommand[2])
             return
           } catch (error: any) {
-            return error.cause as string
+            return error.message as string
           }
         }
 
