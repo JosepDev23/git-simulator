@@ -27,26 +27,28 @@ function checkCommand(
 
       case 'status':
         let statusResponse = `On branch master\n`
-        if (
-          context.stagingArea.length === 0 &&
-          context.workingDirectory.length === 0
-        ) {
+        if (context.repository.length) {
+          statusResponse +=
+            `Your branch is ahead of 'origin/master' by ${context.repository.length} commit.\n` +
+            `  (use "git push" to publish your local commits)\n`
+        }
+        if (!context.stagingArea.length && !context.workingDirectory.length) {
           statusResponse += 'Nothing to commit, working tree clean'
           return statusResponse
         }
-        if (context.stagingArea.length > 0) {
+        if (context.stagingArea.length) {
           statusResponse +=
             'Changes to be committed:\n' +
-            '  (use "git restore --staged <file>..." to unstage)\n' +
+            // '  (use "git restore --staged <file>..." to unstage)\n' +
             context.stagingArea
               .map((file) => `    modified: ${file}`)
               .join('\n')
         }
-        if (context.workingDirectory.length > 0) {
+        if (context.workingDirectory.length) {
           statusResponse +=
             `Changes not staged for commit:\n` +
             `  (use "git add <file>..." to update what will be committed)\n` +
-            `  (use "git restore <file>..." to discard changes in working directory)\n` +
+            // `  (use "git restore <file>..." to discard changes in working directory)\n` +
             context.workingDirectory
               .map((file) => `    modified: ${file}`)
               .join('\n')
