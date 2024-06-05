@@ -9,6 +9,7 @@ export default function Console() {
   const [consoleLines, setConsoleLines] = useState<
     { command: string; output?: string }[]
   >([])
+  const [lineCounter, setLineCounter] = useState(0)
   const gitSimulationContext = useContext(GitSimulationContext)
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -18,12 +19,32 @@ export default function Console() {
 
   function handleKeyDown(event: KeyboardEvent<HTMLInputElement>) {
     if (event.key === 'Enter') {
+      event.preventDefault()
       const output = ConsoleService.checkCommand(
         consoleValue,
         gitSimulationContext!
       )
       setConsoleLines((prev) => prev.concat({ command: consoleValue, output }))
       setConsoleValue('')
+      setLineCounter(consoleLines.length + 1)
+    } else if (event.key === 'ArrowUp') {
+      event.preventDefault()
+      if (lineCounter === 0) {
+        setConsoleValue('')
+        setLineCounter(consoleLines.length)
+      } else {
+        setConsoleValue(consoleLines[lineCounter - 1].command)
+        setLineCounter((prev) => prev - 1)
+      }
+    } else if (event.key === 'ArrowDown') {
+      event.preventDefault()
+      if (lineCounter === consoleLines.length - 1) {
+        setConsoleValue('')
+        setLineCounter(0)
+      } else {
+        setConsoleValue(consoleLines[lineCounter + 1].command)
+        setLineCounter((prev) => prev + 1)
+      }
     }
   }
 
