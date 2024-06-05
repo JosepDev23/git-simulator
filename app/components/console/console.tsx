@@ -1,5 +1,11 @@
 'use client'
-import React, { KeyboardEvent, useContext, useRef, useState } from 'react'
+import React, {
+  KeyboardEvent,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import styles from './console.module.css'
 import ConsoleService from '@/app/services/console.service'
 import { GitSimulationContext } from '@/app/hooks/GitSimulationContext'
@@ -10,13 +16,20 @@ export default function Console() {
     { command: string; output?: string }[]
   >([])
   const [lineCounter, setLineCounter] = useState(0)
+
   const gitSimulationContext = useContext(GitSimulationContext)
+
   const inputRef = useRef<HTMLInputElement>(null)
+  const linesEndRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    linesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [consoleValue])
 
   function handleConsoleValueChange(change: string) {
     setConsoleValue(change)
 
-    setLineCounter(consoleLines.length + 1)
+    setLineCounter(consoleLines.length)
   }
 
   function handleKeyDown(event: KeyboardEvent<HTMLInputElement>) {
@@ -65,6 +78,7 @@ export default function Console() {
             )}
           </div>
         ))}
+        <div ref={linesEndRef} />
       </div>
       <div className={styles.input_wrapper}>
         <label>$ </label>

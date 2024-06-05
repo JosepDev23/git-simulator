@@ -29,3 +29,7 @@ pre {
   color: var(--color-white);
   word-wrap: break-word;
 }
+
+::-webkit-scrollbar {
+  width: 0;
+}

@@ -1,11 +1,13 @@
 .console_wrapper {
   width: 37rem;
+  height: calc(100vh - 2rem);
   margin: 1rem;
   background-color: var(--color-black);
   cursor: text;
 }
 
 .console_lines {
+  overflow-y: scroll;
   display: flex;
   flex-direction: column;
   height: calc(100% - 2rem);
