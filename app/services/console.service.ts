@@ -16,8 +16,10 @@ function checkCommand(
         return (
           'editfile <filename>   Make changes to <filename>\n' +
           'status                Show the working tree status\n' +
-          'add                   Add file contents to the index\n' +
-          'commit -m "<name>"    Record changes to the repository\n'
+          'add --all             Add all files contents to the index\n' +
+          'add <filename>        Add file contents to the index\n' +
+          'commit -m "<name>"    Record changes to the repository\n' +
+          'push                  Update remote refs along with associated objects'
         )
 
       case 'editfile':
