@@ -9,19 +9,19 @@ export default function Drawing() {
 
   return (
     <div className={styles.background}>
-      <div className={styles.stage}>
+      <div className={`${styles.stage} ${styles.border_red}`}>
         <h2>Working directory</h2>
         {gitSimulationContext?.workingDirectory.map((line) => (
           <p>{line} (edited)</p>
         ))}
       </div>
-      <div className={styles.stage}>
+      <div className={`${styles.stage} ${styles.border_yellow}`}>
         <h2>Staging area</h2>
         {gitSimulationContext?.stagingArea.map((line) => (
           <p>{line}</p>
         ))}
       </div>
-      <div className={styles.stage}>
+      <div className={`${styles.stage} ${styles.border_green}`}>
         <h2>Repository</h2>
         {gitSimulationContext?.repository.map((commit) => (
           <div className={styles.card_container}>
@@ -29,7 +29,7 @@ export default function Drawing() {
           </div>
         ))}
       </div>
-      <div className={styles.stage}>
+      <div className={`${styles.stage} ${styles.border_blue}`}>
         <h2>Remote</h2>
         {gitSimulationContext?.remote.map((commit) => (
           <div className={styles.card_container}>

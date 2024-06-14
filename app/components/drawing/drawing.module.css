@@ -1,24 +1,55 @@
 .background {
   width: calc(100vw - 37rem);
-  margin: 1rem;
-  display: flex;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 50% 50%;
 }
 
 .stage {
-  width: 25%;
-  margin: 0 0.5rem;
-  border: solid var(--color-white);
+  margin: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-height: 100%;
+
+  overflow-y: scroll;
 }
 
 .stage h2 {
   margin-top: 0.5rem;
-  color: var(--color-white);
 }
 
 .card_container {
   margin-top: 1rem;
   width: 90%;
+  border-color: inherit;
+  color: inherit;
+}
+
+.border_red {
+  border: solid var(--color-red);
+  border-radius: 1rem;
+  color: var(--color-red);
+  background-color: var(--color-transparent-red);
+}
+
+.border_yellow {
+  border: solid var(--color-yellow);
+  border-radius: 1rem;
+  color: var(--color-yellow);
+  background-color: var(--color-transparent-yellow);
+}
+
+.border_green {
+  border: solid var(--color-green);
+  border-radius: 1rem;
+  color: var(--color-green);
+  background-color: var(--color-transparent-green);
+}
+
+.border_blue {
+  border: solid var(--color-blue);
+  border-radius: 1rem;
+  color: var(--color-blue);
+  background-color: var(--color-transparent-blue);
 }

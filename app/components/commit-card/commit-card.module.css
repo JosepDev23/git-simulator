@@ -1,9 +1,11 @@
 .card_wrapper {
-  border: solid var(--color-black);
+  border: solid 2px;
+  border-color: inherit;
+  color: inherit;
+  border-radius: 1rem;
   display: flex;
   flex-direction: column;
-  color: var(--color-black);
-  padding: 0.3rem;
+  padding: 0.5rem;
 }
 
 .card_title {
