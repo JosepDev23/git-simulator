@@ -86,11 +86,15 @@ function checkCommand(
             .join(' ')
             .split('"')[1]
           const commitId: string = generateCommitId()
-          context.commitChanges(commitName, commitId)
-          return (
-            `[master ${commitId}]\n` +
-            `${context.stagingArea.length} files changed, x insertions(+)`
-          )
+          try {
+            context.commitChanges(commitName, commitId)
+            return (
+              `[master ${commitId}]\n` +
+              `${context.stagingArea.length} files changed, x insertions(+)`
+            )
+          } catch (error: any) {
+            return error.message as string
+          }
         }
       case 'push':
         const objects = context.repository.length
