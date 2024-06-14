@@ -39,3 +39,7 @@
 .line {
   margin-bottom: 0.2rem;
 }
+
+.console_output_line {
+  margin-left: 1rem;
+}

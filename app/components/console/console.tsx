@@ -74,7 +74,12 @@ export default function Console() {
               $ {consoleLine.command}
             </label>
             {consoleLine.output && (
-              <pre key={consoleLine.output + i}>{consoleLine.output}</pre>
+              <pre
+                className={styles.console_output_line}
+                key={consoleLine.output + i}
+              >
+                {consoleLine.output}
+              </pre>
             )}
           </div>
         ))}
