@@ -11,12 +11,12 @@
   flex-direction: column;
   align-items: center;
   max-height: 100%;
-
   overflow-y: scroll;
 }
 
 .stage h2 {
   margin-top: 0.5rem;
+  text-align: center;
 }
 
 .card_container {
@@ -52,4 +52,16 @@
   border-radius: 1rem;
   color: var(--color-blue);
   background-color: var(--color-transparent-blue);
+}
+
+@media only screen and (max-width: 1024px) {
+  .background {
+    width: calc(100vw);
+    height: 60vh;
+  }
+
+  .stage {
+    max-height: 100%;
+    overflow-y: scroll;
+  }
 }

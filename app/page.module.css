@@ -2,3 +2,10 @@
   display: flex;
   min-height: 100vh;
 }
+
+@media only screen and (max-width: 1024px) {
+  .main {
+    flex-direction: column-reverse;
+    max-height: 100vh;
+  }
+}

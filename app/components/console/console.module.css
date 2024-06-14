@@ -43,3 +43,11 @@
 .console_output_line {
   margin-left: 1rem;
 }
+
+@media only screen and (max-width: 1024px) {
+  .console_wrapper {
+    width: calc(100vw - 2rem);
+    height: 40vh;
+    margin: 1rem;
+  }
+}
