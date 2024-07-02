@@ -1,29 +1,29 @@
 'use client'
-import React, { useContext } from 'react'
+import React from 'react'
 import styles from './drawing.module.css'
-import { GitSimulationContext } from '@/app/hooks/GitSimulationContext'
 import CommitCard from '../commit-card/commit-card'
+import useGitStore from '@/app/hooks/git-store'
 
 export default function Drawing() {
-  const gitSimulationContext = useContext(GitSimulationContext)
+  const store = useGitStore()
 
   return (
     <div className={styles.background}>
       <div className={`${styles.stage} ${styles.border_red}`}>
         <h2>Working directory</h2>
-        {gitSimulationContext?.workingDirectory.map((line) => (
+        {store.workingDirectory.map((line) => (
           <p>{line} (edited)</p>
         ))}
       </div>
       <div className={`${styles.stage} ${styles.border_yellow}`}>
         <h2>Staging area</h2>
-        {gitSimulationContext?.stagingArea.map((line) => (
+        {store.stagingArea.map((line) => (
           <p>{line}</p>
         ))}
       </div>
       <div className={`${styles.stage} ${styles.border_green}`}>
         <h2>Repository</h2>
-        {gitSimulationContext?.repository.map((commit) => (
+        {store.repository.map((commit) => (
           <div className={styles.card_container}>
             <CommitCard commit={commit} />
           </div>
@@ -31,7 +31,7 @@ export default function Drawing() {
       </div>
       <div className={`${styles.stage} ${styles.border_blue}`}>
         <h2>Remote</h2>
-        {gitSimulationContext?.remote.map((commit) => (
+        {store.remote.map((commit) => (
           <div className={styles.card_container}>
             <CommitCard commit={commit} />
           </div>

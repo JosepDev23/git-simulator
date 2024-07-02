@@ -1,10 +1,7 @@
-import { GitSimulationContextType } from '../hooks/GitSimulationContext'
+import { GitStore } from '../hooks/git-store'
 import generateCommitId from './generate-commit-id.service'
 
-function checkCommand(
-  command: string,
-  context: GitSimulationContextType
-): string | undefined {
+function checkCommand(command: string, store: GitStore): string | undefined {
   const splittedCommand: string[] = command.split(' ')
   if (splittedCommand[0] === '') return undefined
 
@@ -24,35 +21,35 @@ function checkCommand(
 
       case 'editfile':
         if (!splittedCommand[2]) return 'Usage: git editfile <filename>'
-        context.makeChanges(splittedCommand[2])
+        store.makeChanges(splittedCommand[2])
         return `File ${splittedCommand[2]} edited successfully!`
 
       case 'status':
         let statusResponse = `On branch master\n`
-        if (context.repository.length) {
+        if (store.repository.length) {
           statusResponse +=
-            `Your branch is ahead of 'origin/master' by ${context.repository.length} commit.\n` +
+            `Your branch is ahead of 'origin/master' by ${store.repository.length} commit.\n` +
             `  (use "git push" to publish your local commits)\n`
         }
-        if (!context.stagingArea.length && !context.workingDirectory.length) {
+        if (!store.stagingArea.length && !store.workingDirectory.length) {
           statusResponse += 'Nothing to commit, working tree clean'
           return statusResponse
         }
-        if (context.stagingArea.length) {
+        if (store.stagingArea.length) {
           statusResponse +=
             'Changes to be committed:\n' +
             // '  (use "git restore --staged <file>..." to unstage)\n' +
-            context.stagingArea
+            store.stagingArea
               .map((file) => `    modified: ${file}`)
               .join('\n')
               .concat('\n')
         }
-        if (context.workingDirectory.length) {
+        if (store.workingDirectory.length) {
           statusResponse +=
             `Changes not staged for commit:\n` +
             `  (use "git add <file>..." to update what will be committed)\n` +
             // `  (use "git restore <file>..." to discard changes in working directory)\n` +
-            context.workingDirectory
+            store.workingDirectory
               .map((file) => `    modified: ${file}`)
               .join('\n')
               .concat('\n')
@@ -63,12 +60,12 @@ function checkCommand(
         if (!splittedCommand[2])
           return 'Usage: git add <filename> or git add --all'
         else if (splittedCommand[2] === '--all') {
-          context.moveAllFromWorkingDirectoryToStagingArea()
+          store.moveAllFromWorkingDirectoryToStagingArea()
           return
         } else {
           try {
             if (splittedCommand[2])
-              context.moveFromWorkingDirectoryToStagingArea(splittedCommand[2])
+              store.moveFromWorkingDirectoryToStagingArea(splittedCommand[2])
             return
           } catch (error: any) {
             return error.message as string
@@ -87,19 +84,19 @@ function checkCommand(
             .split('"')[1]
           const commitId: string = generateCommitId()
           try {
-            context.commitChanges(commitName, commitId)
+            store.commitChanges(commitName, commitId)
             return (
               `[master ${commitId}]\n` +
-              `${context.stagingArea.length} files changed, x insertions(+)`
+              `${store.stagingArea.length} files changed, x insertions(+)`
             )
           } catch (error: any) {
             return error.message as string
           }
         }
       case 'push':
-        const objects = context.repository.length
+        const objects = store.repository.length
         if (objects === 0) return 'Everything up-to-date'
-        context.push()
+        store.push()
         return (
           `Counting objects: ${objects}, done.\n` +
           `Delta compression using up to 4 threads.\n` +

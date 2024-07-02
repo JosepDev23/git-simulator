@@ -1,14 +1,8 @@
 'use client'
-import React, {
-  KeyboardEvent,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from 'react'
+import React, { KeyboardEvent, useEffect, useRef, useState } from 'react'
 import styles from './console.module.css'
 import ConsoleService from '@/app/services/console.service'
-import { GitSimulationContext } from '@/app/hooks/GitSimulationContext'
+import useGitStore from '@/app/hooks/git-store'
 
 export default function Console() {
   const [consoleValue, setConsoleValue] = useState<string>('')
@@ -17,7 +11,7 @@ export default function Console() {
   >([])
   const [lineCounter, setLineCounter] = useState(0)
 
-  const gitSimulationContext = useContext(GitSimulationContext)
+  const store = useGitStore()
 
   const inputRef = useRef<HTMLInputElement>(null)
   const linesEndRef = useRef<HTMLDivElement>(null)
@@ -35,10 +29,7 @@ export default function Console() {
   function handleKeyDown(event: KeyboardEvent<HTMLInputElement>) {
     if (event.key === 'Enter') {
       event.preventDefault()
-      const output = ConsoleService.checkCommand(
-        consoleValue,
-        gitSimulationContext!
-      )
+      const output = ConsoleService.checkCommand(consoleValue, store)
       setConsoleLines((prev) => prev.concat({ command: consoleValue, output }))
       setConsoleValue('')
       setLineCounter(consoleLines.length + 1)
